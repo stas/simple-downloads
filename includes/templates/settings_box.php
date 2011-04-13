@@ -17,7 +17,7 @@
             </option>
             <?php foreach ( $file_ids as $fid ): ?>
                 <option value="<?php echo $fid->ID; ?>" <?php selected( $fid->ID, $file_id ); ?>>
-                    <?php echo end( explode( '/', $fid->guid ) ); ?>
+                    <?php echo basename( $fid->guid ); ?>
                 </option>
             <?php endforeach; ?>
         </select>

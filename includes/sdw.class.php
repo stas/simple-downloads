@@ -14,6 +14,7 @@ class SDW {
      */
     function init() {
         add_action( 'init', array( __CLASS__, 'post_type' ) );
+        add_action( 'wp', array( __CLASS__, 'getfile' ) );
         add_action( 'save_post', array( __CLASS__, 'save_settings' ) );
     }
     
@@ -97,10 +98,13 @@ class SDW {
         if ( !current_user_can( 'edit_post', $post_id ) )
             return $post_id;
         
-        if( isset( $_POST['file_id'] ) && !empty( $_POST['file_id'] ) )
+        if( !isset( $_POST['file_id'] ) || !isset( $_POST['restrict_to'] ) )
+            return $post_id;
+        
+        if( !empty( $_POST['file_id'] ) )
             $file_id = intval( $_POST['file_id'] );
         
-        if( isset( $_POST['restrict_to'] ) && !empty( $_POST['restrict_to'] ) )
+        if( !empty( $_POST['restrict_to'] ) )
             $restrict_to = sanitize_key( $_POST['restrict_to'] );
         
         update_post_meta( $post_id, self::$meta_keys[0], $file_id );
@@ -120,6 +124,53 @@ class SDW {
             'settings_box',
             self::get_settings( $post->ID )
         );
+    }
+    
+    /**
+     * getfile()
+     *
+     * Downloads handler
+     */
+    function getfile() {
+        if( !isset( $_GET['getfile'] ) )
+            return;
+        
+        $file_id = self::check_download();
+        if( !$file_id )
+            return;
+        
+        $file = get_post( $file_id );
+        $file_path = get_attached_file( $file_id );
+        
+        if( is_object( $file ) && $file->post_type = 'attachment' ) {
+            header('Content-Type: ' . $file->post_mime_type );
+            header('Content-Disposition: attachment; filename="' . basename( $file->guid ) . '"' );
+            readfile( $file_path );
+        }
+        return;
+    }
+    
+    /**
+     * check_download()
+     *
+     * Checks if current visitor cand download the file.
+     */
+    function check_download() {
+        global $post;
+        
+        $file_id = get_post_meta( $post->ID, 'file_id', true );
+        $restrict_to = get_post_meta( $post->ID, 'restrict_to', true );
+        
+        if( !is_user_logged_in() && $restrict_to )
+            return;
+        
+        if( !$file_id )
+            return;
+        
+        if( !current_user_can( 'manage_options' ) && ( $restrict_to && !current_user_can( $restrict_to ) ) )
+            return;
+        
+        return $file_id;
     }
     
     /**
