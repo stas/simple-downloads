@@ -17,7 +17,7 @@ require_once SDW_ROOT . '/includes/sdw.class.php';
  * i18n
  */
 function sdw_textdomain() {
-    load_plugin_textdomain( 'sdw', false, basename( SCRM_ROOT ) . '/languages' );
+    load_plugin_textdomain( 'sdw', false, basename( SDW_ROOT ) . '/languages' );
 }
 add_action( 'init', 'sdw_textdomain' );
 

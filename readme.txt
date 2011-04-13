@@ -1,6 +1,6 @@
 === Simple Downloads ===
 Contributors: sushkov
-Tags: downloads, custom, pages, cpt, restrict, users, roles vivanista
+Tags: downloads, custom, pages, cpt, restrict, users, roles, vivanista
 Requires at least: WordPress 3.0
 Tested up to: WordPress 3.1.1
 Stable tag: 0.1
