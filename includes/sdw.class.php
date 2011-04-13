@@ -95,6 +95,9 @@ class SDW {
         if ( isset( $_POST['sdw_settings_nonce'] ) && !wp_verify_nonce( $_POST['sdw_settings_nonce'], 'sdw' ))
             return $post_id;
         
+        // Check if template is available
+        self::check_template();
+        
         if ( !current_user_can( 'edit_post', $post_id ) )
             return $post_id;
         
@@ -171,6 +174,19 @@ class SDW {
             return;
         
         return $file_id;
+    }
+    
+    /**
+     * check_template()
+     *
+     * Checks if current theme has the template file for this post type
+     */
+    function check_template() {
+        $template_name = 'single-download.php';
+        $source_template_file = dirname( __FILE__ ) . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR . $template_name;
+        $theme_folder = get_stylesheet_directory();
+        if( !file_exists( $theme_folder . DIRECTORY_SEPARATOR . $template_name ) )
+            copy( $source_template_file, $theme_folder . DIRECTORY_SEPARATOR . $template_name );
     }
     
     /**
