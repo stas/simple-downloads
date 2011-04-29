@@ -3,6 +3,9 @@ class SDW {
     // Our post type
     public static $post_type = 'download';
     
+    // Our post type archive slug
+    public static $post_type_slug = 'downloads-archive';
+    
     // Post type meta keys
     public static $meta_keys = array(
         'file_id',
@@ -36,7 +39,8 @@ class SDW {
             'rewrite' => array( 'slug' => self::$post_type ),
             'supports' => array( 'title', 'editor', 'thumbnail' ),
             'register_meta_box_cb' => array( __CLASS__, 'meta_boxes' ),
-            'show_ui' => true
+            'show_ui' => true,
+            'has_archive' => self::$post_type_slug
         ) );
     }
     
@@ -78,6 +82,10 @@ class SDW {
                 'post_type' => 'attachment'
             )
         );
+        
+        $settings['archive_link'] = home_url() . '/' . self::$post_type_slug;
+        $settings['archive_slug'] = self::$post_type_slug;
+        
         return $settings;
     }
     

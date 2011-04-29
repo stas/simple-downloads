@@ -35,3 +35,15 @@
         <?php wp_dropdown_roles( $restrict_to ); ?>
     </select>
 </p>
+
+<p>
+    <label for="archive_link">
+        <strong><?php _e( 'Downloads archive permalink', 'sdw' ); ?>:</strong>
+    </label>
+    <input type="text" id="archive_link" class="widefat" value="<?php echo $archive_link; ?>" />
+</p>
+
+<p>
+    <strong><?php _e( 'Default downloads archive slug is', 'sdw' ); ?>:</strong>
+    <code><?php echo $archive_slug; ?></code>
+</p>
