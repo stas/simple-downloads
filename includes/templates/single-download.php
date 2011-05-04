@@ -1,9 +1,9 @@
 <?php get_header(); ?>
 
-		<div id="container">
-			<div id="content" role="main">
-
-			<?php if (have_posts()) : while (have_posts()) : the_post(); ?>
+        <div id="container">
+            <div id="content" role="main">
+    
+            <?php if (have_posts()) : while (have_posts()) : the_post(); ?>
                 <div class="post download">
                     <h1 class="entry-title">
                         <a href="<?php the_permalink(); ?>" rel="bookmark" title="<?php the_title_attribute(); ?>">
@@ -35,8 +35,8 @@
                 </div>
             <?php endwhile; endif; ?>
 
-			</div><!-- #content -->
-		</div><!-- #container -->
+            </div><!-- #content -->
+        </div><!-- #container -->
 
 <?php get_sidebar(); ?>
 <?php get_footer(); ?>
