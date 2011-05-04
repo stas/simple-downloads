@@ -14,7 +14,7 @@
                     <div class="clear"></div>
                     
                     <div class="entry-thumbnail">
-                        <?php the_post_thumbnail('medium'); ?>
+                        <?php the_post_thumbnail( 'original' ); ?>
                     </div>
                     
                     <div class="entry-download-link">

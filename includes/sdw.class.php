@@ -169,6 +169,8 @@ class SDW {
     function check_download() {
         global $post;
         
+        $is_ok = true;
+        
         $file_id = get_post_meta( $post->ID, 'file_id', true );
         $restrict_to = get_post_meta( $post->ID, 'restrict_to', true );
         
@@ -179,6 +181,11 @@ class SDW {
             return;
         
         if( !current_user_can( 'manage_options' ) && ( $restrict_to && !current_user_can( $restrict_to ) ) )
+            $is_ok = false;
+        
+        $is_ok = apply_filters( 'simple_downloads_check_restriction', $restrict_to );
+        
+        if( !$is_ok )
             return;
         
         return $file_id;
