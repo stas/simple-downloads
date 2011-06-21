@@ -175,6 +175,9 @@ class SDW {
         $file_id = get_post_meta( $post->ID, 'file_id', true );
         $restrict_to = get_post_meta( $post->ID, 'restrict_to', true );
         
+        if( empty( $restrict_to ) )
+            return $file_id;
+        
         if( !is_user_logged_in() && $restrict_to )
             return;
         
