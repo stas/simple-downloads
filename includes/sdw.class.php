@@ -38,11 +38,22 @@ class SDW {
             'map_meta_cap' => true,
             'rewrite' => array( 'slug' => self::$post_type ),
             'supports' => array( 'title', 'editor', 'thumbnail' ),
-            'taxonomies' => array( 'category' ),
+            'taxonomies' => array( 'downloadcat' ),
             'register_meta_box_cb' => array( __CLASS__, 'meta_boxes' ),
             'show_ui' => true,
             'has_archive' => self::$post_type_slug
         ) );
+        register_taxonomy(
+            'downloadcat',
+            'download',
+            array(
+                'label' => __( 'Downloads Category', 'vivanista' ),
+                'show_ui' => true,
+                'query_var' => true,
+                'hierarchical' => true,
+                'rewrite' => array( 'slug' => 'download-category' ),
+            )
+        );
     }
     
     /**
